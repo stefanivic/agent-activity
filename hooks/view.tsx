@@ -75,6 +75,8 @@ const TOOL_GLYPH: Record<string, string> = {
   MessageNow: '»',
 }
 
+const plural = (count: number, noun: string) => `${count} ${noun}${count === 1 ? '' : 's'}`
+
 // The newest entries the transcript draws; older ones are counted above them.
 const TRANSCRIPT_ENTRIES = 60
 
@@ -219,7 +221,7 @@ const card = (ui: Ui, row: AgentRow, now: number, width: number, actions: Action
           )}
           {step !== undefined && <Code source={nowLine(step)} wrap="truncate-end" />}
           <Text dimColor>
-            {stats.read} files read · {stats.edited} edited · {stats.commands} commands
+            {plural(stats.read, 'file')} read · {stats.edited} edited · {plural(stats.commands, 'command')}
             {row.tokens !== undefined ? ` · ${formatTokens(row.tokens)} tokens` : ''}
           </Text>
         </Box>

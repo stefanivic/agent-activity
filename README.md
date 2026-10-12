@@ -2,6 +2,8 @@
 
 A Claude Code plugin that adds a live **Subagents** panel: what each subagent is doing, as it does it.
 
+![The Subagents panel beside a conversation in the Claude desktop app, with three agents running and the summary line above the prompt](docs/subagents-panel.webp)
+
 ## What it shows
 
 **The list**

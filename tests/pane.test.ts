@@ -229,6 +229,7 @@ for (const surface of SURFACES) {
     expect(await list.find({ type: 'Text', text: 'Starting the count now.' })).toBeDefined()
     // Tokens count up as each response lands, while the agent still runs.
     expect(await list.find({ type: 'Text', text: /2k tokens$/ })).toBeDefined()
+    expect(await list.find({ type: 'Text', text: /^0 files read · 0 edited · 0 commands/ })).toBeDefined()
     expect(await list.find({ type: 'Text', text: '2k tokens used by all subagents' })).toBeDefined()
   })
 
