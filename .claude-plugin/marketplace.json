@@ -1,0 +1,6 @@
+{
+  "name": "agent-activity",
+  "owner": { "name": "Stefan Ivic" },
+  "description": "The agent-activity plugin for Claude Code",
+  "plugins": [{ "name": "agent-activity", "source": "./" }]
+}
