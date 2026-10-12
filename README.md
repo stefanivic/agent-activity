@@ -39,7 +39,10 @@ In a Claude Code terminal session:
 ```
 
 Answer `y` to add the marketplace, then pick a scope (user scope loads it in every session, the desktop app's Code tab
-included). The repository is private, so the GitHub account you install with needs access to it.
+included).
+
+The plugin is built on Claude Code's plugin API, which is in early access and may change between Claude Code
+releases; a release that changes it can break the panel until the plugin is updated.
 
 ## Limits
 
@@ -69,3 +72,7 @@ it with:
 claude plugin validate .
 claude plugin test .
 ```
+
+## License
+
+[MIT](LICENSE)

@@ -2,7 +2,10 @@
   "name": "agent-activity",
   "version": "0.1.0",
   "description": "A live Subagents panel: each subagent's status, activity, streamed text and result, with Stop, Try again and messaging",
-  "author": { "name": "Stefan Ivic" },
+  "author": {
+    "name": "Stefan Ivic"
+  },
   "repository": "https://github.com/stefanivic/agent-activity",
+  "license": "MIT",
   "types": "./types/index.d.ts"
 }
