@@ -71,6 +71,7 @@ const TOOL_GLYPH: Record<string, string> = {
   WebSearch: '⌕',
   TodoWrite: '☰',
   Agent: '→',
+  SubagentHandback: '↩',
   Message: '›',
   MessageNow: '»',
 }

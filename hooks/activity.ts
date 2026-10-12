@@ -135,6 +135,8 @@ export const stepWords = (step: Step): { past: string; now: string } => {
       return { past: `Searched the web for ${subject}`, now: `Searching the web for ${subject}` }
     case 'TodoWrite':
       return { past: 'Updated its plan', now: 'Updating its plan' }
+    case 'SubagentHandback':
+      return { past: 'Reported back to Claude', now: 'Reporting back to Claude' }
     case 'Text':
       return { past: subject, now: 'Writing a reply' }
     case 'Message':

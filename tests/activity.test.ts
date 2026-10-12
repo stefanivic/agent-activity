@@ -17,6 +17,7 @@ import {
   planOf,
   setTodos,
   sortForList,
+  stepWords,
   syncStatuses,
   waitingFor,
   wantsTo,
@@ -56,6 +57,10 @@ describe('formatting', () => {
     expect(formatDuration(248_000)).toBe('4 m 08 s')
     expect(formatDuration(40_000)).toBe('40 s')
     expect(formatClock(221_000)).toBe('3:41')
+  })
+
+  test('names the hand-back the way the design does', () => {
+    expect(stepWords(step('t', 'SubagentHandback')).past).toBe('Reported back to Claude')
   })
 
   test('says what an agent wants to do', () => {
