@@ -18,6 +18,9 @@ A Claude Code plugin that adds a live **Subagents** panel: what each subagent is
 - **Clear finished**, **Stop all**, and **Try again** on a failed or stopped agent.
 
 **One agent** (See activity, or open a subagent's transcript in the app)
+
+![One agent's view: the task Claude gave it, then its transcript with its narration and each command's output](docs/subagent-detail.webp)
+
 - The task Claude gave the agent, then its transcript in order: its text as it writes it, and each tool call with the
   command's output underneath.
 - **Stop**, **Try again**, and a message box with **Send** and **Send now** (Send now stops the agent first, so the
