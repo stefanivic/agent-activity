@@ -1,6 +1,6 @@
 {
   "name": "agent-activity",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A live Subagents panel: each subagent's status, activity, streamed text and result, with Stop, Try again and messaging",
   "author": {
     "name": "Stefan Ivic"

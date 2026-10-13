@@ -33,8 +33,9 @@ const clock = atom({ plugin: 'agent-activity', key: 'now' } as const, 0)
 const drafts = atom({ plugin: 'agent-activity', key: 'drafts' } as const, {})
 const mode = atom({ plugin: 'agent-activity', key: 'mode' } as const, null)
 
-// Auto mode's classifier refuses a message the panel sends, as no request in
-// the conversation asked for it, so there the panel offers no message box.
+// Auto mode's classifier refuses a message the panel sends, and an agent it
+// starts again, as no request in the conversation asked for either, so there
+// the panel offers neither the message box nor Try again.
 const AUTO_MODE = 'auto'
 
 // These hooks only watch: if one fails, the call goes on as if it were not here.
@@ -362,9 +363,10 @@ export const register: Register = on => {
     // opened here.
     const wanted = e.props.view.agentId ?? (await read($, openId))
     const row = list.find(one => one.id === wanted)
+    const canAct = (await read($, mode)) !== AUTO_MODE
 
     return row === undefined
-      ? listView(ui, { list, filter: await read($, filter), now, width }, actions)
+      ? listView(ui, { list, filter: await read($, filter), now, width, canAct }, actions)
       : detailView(
           ui,
           {
@@ -373,7 +375,7 @@ export const register: Register = on => {
             now,
             width,
             draft: (await read($, drafts))[row.id] ?? '',
-            canMessage: (await read($, mode)) !== AUTO_MODE,
+            canAct,
           },
           actions,
         )

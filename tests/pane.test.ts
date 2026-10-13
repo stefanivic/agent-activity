@@ -283,7 +283,7 @@ for (const surface of SURFACES) {
     expect(await pane.find({ type: 'Text', text: 'Please agent a.' })).toBeDefined()
   })
 
-  test(`${surface}: auto mode offers no message box, other modes do`, async ($, on) => {
+  test(`${surface}: auto mode offers no message box or Try again, other modes do`, async ($, on) => {
     engineBeneath(on)
     await spawn($, 's', 'Sleeper', 'auto')
     const inAuto = await mountPane($, surface, 'agent-s')
@@ -291,8 +291,13 @@ for (const surface of SURFACES) {
     expect(await inAuto.find({ key: 'message-agent-s' })).toBeUndefined()
     expect(await inAuto.find({ key: 'send-agent-s' })).toBeUndefined()
     expect(await inAuto.find({ key: 'stop-agent-s' })).toBeDefined()
-    expect(await inAuto.find({ type: 'Text', text: /works outside auto mode/ })).toBeDefined()
+    expect(await inAuto.find({ type: 'Text', text: /work outside auto mode/ })).toBeDefined()
     await inAuto.unmount()
+
+    await complete($, 'agent-s', 'cut short', 'error')
+    const listInAuto = await mountPane($, surface)
+    expect(await listInAuto.find({ key: 'retry-agent-s' })).toBeUndefined()
+    await listInAuto.unmount()
 
     await spawn($, 'q', 'Quick', 'default')
     const inDefault = await mountPane($, surface, 'agent-q')

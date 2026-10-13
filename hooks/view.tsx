@@ -186,7 +186,7 @@ const header = (ui: Ui, row: AgentRow, now: number, isLarge: boolean) => {
   )
 }
 
-const card = (ui: Ui, row: AgentRow, now: number, width: number, actions: Actions) => {
+const card = (ui: Ui, row: AgentRow, now: number, width: number, canAct: boolean, actions: Actions) => {
   const { Box, Text, Button, Code } = ui
   const phase = phaseOf(row)
   const step = currentStep(row)
@@ -241,7 +241,7 @@ const card = (ui: Ui, row: AgentRow, now: number, width: number, actions: Action
         {!isEnded(row) && (
           <Button key={`stop-${row.id}`} label="Stop" plain onPress={() => actions.stop(row.id)} />
         )}
-        {canRetry(row) && (
+        {canAct && canRetry(row) && (
           <Button key={`retry-${row.id}`} label="Try again" plain onPress={() => actions.retry(row.id)} />
         )}
       </Box>
@@ -289,11 +289,11 @@ const compactRow = (ui: Ui, row: AgentRow, now: number, actions: Actions) => {
 
 export const listView = (
   ui: Ui,
-  state: { list: AgentRow[]; filter: Filter; now: number; width: number },
+  state: { list: AgentRow[]; filter: Filter; now: number; width: number; canAct: boolean },
   actions: Actions,
 ) => {
   const { Box, Text, Button } = ui
-  const { list, filter, now, width } = state
+  const { list, filter, now, width, canAct } = state
   const counts = countPhases(list)
   const firstStart = Math.min(...list.map(row => row.startedAt))
   const lastEnd = list.every(isEnded) ? Math.max(...list.map(row => row.endedAt ?? now)) : now
@@ -358,7 +358,7 @@ export const listView = (
 
       {shown.length === 0 && <Text dimColor>None here.</Text>}
       {shown.map(row =>
-        shown.length > COMPACT_AFTER && isEnded(row) ? compactRow(ui, row, now, actions) : card(ui, row, now, width, actions),
+        shown.length > COMPACT_AFTER && isEnded(row) ? compactRow(ui, row, now, actions) : card(ui, row, now, width, canAct, actions),
       )}
 
       {(tokens > 0 || active > 0) && (
@@ -386,11 +386,11 @@ const section = (ui: Ui, title: string, aside?: string) => {
 
 export const detailView = (
   ui: Ui,
-  state: { list: AgentRow[]; row: AgentRow; now: number; width: number; draft: string; canMessage: boolean },
+  state: { list: AgentRow[]; row: AgentRow; now: number; width: number; draft: string; canAct: boolean },
   actions: Actions,
 ) => {
   const { Box, Text, Button, Code, Markdown, Input } = ui
-  const { list, row, now, width, draft, canMessage } = state
+  const { list, row, now, width, draft, canAct } = state
   const ordered = sortForList(list)
   const at = ordered.findIndex(one => one.id === row.id)
   const previous = ordered[at - 1]
@@ -418,7 +418,7 @@ export const detailView = (
       {header(ui, row, now, true)}
       {planBar(ui, row, width)}
       <Box flexDirection="column" gap={1}>
-        {canMessage && (
+        {canAct && (
           <Input
             key={`message-${row.id}`}
             label="Message this agent"
@@ -429,27 +429,27 @@ export const detailView = (
           />
         )}
         <Box flexDirection="row" gap={1}>
-          {canMessage && (
+          {canAct && (
             <Button key={`send-${row.id}`} label="Send" variant="primary" onPress={() => actions.send(row.id, false)} />
           )}
-          {canMessage && !isEnded(row) && (
+          {canAct && !isEnded(row) && (
             <Button key={`send-now-${row.id}`} label="Send now" onPress={() => actions.send(row.id, true)} />
           )}
           {!isEnded(row) && (
             <Button key={`stop-${row.id}`} label="■ Stop" hotkey="x" plain onPress={() => actions.stop(row.id)} />
           )}
-          {canRetry(row) && (
+          {canAct && canRetry(row) && (
             <Button key={`retry-${row.id}`} label="Try again" hotkey="r" onPress={() => actions.retry(row.id)} />
           )}
         </Box>
-        {canMessage && !isEnded(row) && (
+        {canAct && !isEnded(row) && (
           <Text dimColor>
             Send delivers it when the agent next checks in. Send now interrupts what it is doing first.
           </Text>
         )}
-        {!canMessage && (
+        {!canAct && (
           <Text dimColor>
-            Messaging a subagent from here works outside auto mode. Switch modes to send it a message.
+            Messaging and Try again work outside auto mode. Switch modes to use them.
           </Text>
         )}
       </Box>

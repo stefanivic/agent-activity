@@ -54,8 +54,9 @@ releases; a release that changes it can break the panel until the plugin is upda
 These come from what Claude Code lets a plugin do, not from this plugin:
 
 - **Approvals** are still answered in Claude's own permission prompt; a card can't hold Allow and Deny.
-- **Messaging an agent doesn't work in auto mode**: auto mode's classifier refuses a message no request in the
-  conversation asked for, so in auto mode the panel shows a note instead of the message box. The panel learns the mode
+- **Messaging an agent and Try again don't work in auto mode**: auto mode's classifier refuses a message, or an agent
+  started again, that no request in the conversation asked for, so in auto mode the panel shows a note instead of the
+  message box and leaves out Try again. The panel learns the mode
   when a subagent starts or an approval is asked, so just after a mode switch it may show the old one.
 - **No plan or "Step 3 of 7"**: subagents have neither TodoWrite nor the task tools to keep one.
 - **Command output appears when the command ends**, not while it runs. A command an agent runs in the background shows
